@@ -2,14 +2,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 public class fileReader
 {
 	
-	ArrayList<ArrayList<ArrayList<ArrayList<String>>>> everything = new ArrayList<ArrayList<ArrayList<ArrayList<String>>>>();
-	ArrayList<ArrayList<ArrayList<String>>> files = new ArrayList<ArrayList<ArrayList<String>>>();
-	ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
+//	ArrayList<ArrayList<ArrayList<ArrayList<String>>>> everything = new ArrayList<ArrayList<ArrayList<ArrayList<String>>>>();
+//	ArrayList<ArrayList<ArrayList<String>>> files = new ArrayList<ArrayList<ArrayList<String>>>();
+//	ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 	ArrayList<String> data = new ArrayList<String>();
 	
 	public void readFile(File fileToRead)
@@ -24,22 +25,51 @@ public class fileReader
 			while(input.hasNextLine())
 			{
 				
-					String[] temp = (input.nextLine().split(","));
+					String temp = (input.nextLine());
 					
-					for(int i = 0; i < temp.length;i++)
+					StringTokenizer parser = new StringTokenizer(temp, ",");
+					
+					while(parser.hasMoreTokens())
 					{
-						data.add(temp[i]);
-						rows.add(data);
-						data = new ArrayList<String>();
+						String testVar = parser.nextToken();
 						
-//						System.out.println(temp[i]);
+						//if test var has more than one quote, continue
+						
+						int quoteCount = testVar.length() - testVar.replace("\"", "").length();
+						
+						if(testVar.contains("\"") && quoteCount == 1)
+						{
+							String addTemp = parser.nextToken();
+							String quoteTemp = testVar + "," + addTemp;
+
+							while(!addTemp.contains("\""))
+							{
+								
+								addTemp = parser.nextToken();
+								quoteTemp = quoteTemp + "," + addTemp;
+								
+							}
+
+							quoteTemp = quoteTemp.replace("\"", "");
+							
+							data.add(quoteTemp);
+							quoteCount = 0;
+							continue;
+						}
+						
+						
+						data.add(testVar);
 					}
-				
-				
-				files.add(rows);
-				everything.add(files);
-				
-				rows = new ArrayList<ArrayList<String>>();
+					
+//				rows.add(data);
+//				
+//				data = new ArrayList<String>();
+//				
+//				files.add(rows);
+//				
+//				everything.add(files);
+//				
+//				rows = new ArrayList<ArrayList<String>>();
 				
 			}
 			
@@ -53,9 +83,9 @@ public class fileReader
 		
 	}
 	
-	public ArrayList<ArrayList<ArrayList<ArrayList<String>>>> getData()
+	public ArrayList<String> getData()
 	{
-		return everything;
+		return data;
 	}
 
 	
