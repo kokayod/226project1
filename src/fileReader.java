@@ -13,6 +13,7 @@ public class fileReader
 //	ArrayList<ArrayList<String>> rows = new ArrayList<ArrayList<String>>();
 	ArrayList<String> data = new ArrayList<String>();
 	
+	//Have arraylist be added to regular array at end and send out
 	public void readFile(File fileToRead)
 	{
 		
@@ -32,44 +33,9 @@ public class fileReader
 					while(parser.hasMoreTokens())
 					{
 						String testVar = parser.nextToken();
-						
-						//if test var has more than one quote, continue
-						
-						int quoteCount = testVar.length() - testVar.replace("\"", "").length();
-						
-						if(testVar.contains("\"") && quoteCount == 1)
-						{
-							String addTemp = parser.nextToken();
-							String quoteTemp = testVar + "," + addTemp;
 
-							while(!addTemp.contains("\""))
-							{
-								
-								addTemp = parser.nextToken();
-								quoteTemp = quoteTemp + "," + addTemp;
-								
-							}
-
-							quoteTemp = quoteTemp.replace("\"", "");
-							
-							data.add(quoteTemp);
-							quoteCount = 0;
-							continue;
-						}
-						
-						
 						data.add(testVar);
 					}
-					
-//				rows.add(data);
-//				
-//				data = new ArrayList<String>();
-//				
-//				files.add(rows);
-//				
-//				everything.add(files);
-//				
-//				rows = new ArrayList<ArrayList<String>>();
 				
 			}
 			
@@ -83,9 +49,16 @@ public class fileReader
 		
 	}
 	
-	public ArrayList<String> getData()
+	public String[] getData()
 	{
-		return data;
+		String[] studentData = new String[data.size()];
+		
+		for(int i = 0; i < data.size(); i++)
+		{
+			studentData[i] = data.get(i);
+		}
+		
+		return studentData;
 	}
 
 	
