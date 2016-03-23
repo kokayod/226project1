@@ -10,6 +10,8 @@ public class CSVmenu
 
 	public void start(){
 		while(!input.equalsIgnoreCase("e")){
+			boolean isEntry = false;
+			
 			System.out.println("Please select from the following options:"
 					+ "\n1) Enter ‘a’ or ‘A’ to add data."
 					+ "\n2) Enter ‘s’ or ‘S’ to save data for a student."
@@ -19,14 +21,17 @@ public class CSVmenu
 
 			if(input.equalsIgnoreCase("a")){
 				addData();
+				isEntry = true;
 			}
 			else if(input.equalsIgnoreCase("s")){
 				saveData();
+				isEntry = true;
 			}
 			else if(input.equalsIgnoreCase("g")){
 				numberOfGradesData();
+				isEntry = true;
 			}
-			else if(!input.equalsIgnoreCase("e")){
+			else if(!input.equalsIgnoreCase("e") && isEntry == false){
 				System.out.println("Invalid entry!");
 			}
 		}
@@ -34,16 +39,15 @@ public class CSVmenu
 	}
 
 	//add exception handling for no data (valid file) added
-	public void addData(){
-		System.out.println("Please enter file name:");
-		fileName = kb.nextLine();
-
-		getCourseInfo();
-
+	private void addData(){
+//		getCourseInfo();
+		fileName = courseNum + "-" + courseSem + "-" + courseYear + ".csv";
+		System.out.println(fileName);
 		//check here if file exist
 		
 		//read and extract data from file
-		read.extract(fileName);
+//		read.extract(fileName);
+		read.extract("380-fall-2002.csv");
 		
 		
 		//Print number of students in existing repository and those whose data was read
@@ -51,7 +55,7 @@ public class CSVmenu
 		System.out.println("Number of students whose data was read: ");
 	}
 
-	public void saveData(){
+	private void saveData(){
 		System.out.println("Please enter student ID:");
 		studentID = kb.nextLine();
 
@@ -64,7 +68,7 @@ public class CSVmenu
 
 	}
 
-	public void numberOfGradesData(){
+	private void numberOfGradesData(){
 		getCourseInfo();
 		if(!(courseNum.equalsIgnoreCase("none") && (courseSem.equalsIgnoreCase("none") || courseYear.equalsIgnoreCase("none")))){
 			//return array of grades with [0] = numofAs, [1] = numofBs, [2] = numofCs, [3] = numofDs, [4] = numofFs
