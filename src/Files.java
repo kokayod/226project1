@@ -5,9 +5,6 @@ import java.util.HashMap;
 
 public class Files
 {
-	//<FileName, [    ]>
-	//           studentid(Hashmap)
-	
 
 	private HashMap <String, Student> classMap;
 	
@@ -21,7 +18,7 @@ public class Files
 		}
 	}
 	
-	public ArrayList<String> chooseFilesToRead(String year, String semester)
+	public ArrayList<String> chooseFilesToRead(String courseNum, String year, String semester)
 	{
 		String[] fileNames = (String[]) classMap.keySet().toArray();
 		
@@ -69,6 +66,18 @@ public class Files
 		}
 		
 		return grades;
+	}
+	
+	public int getNumberOfStudents()
+	{
+		int students = 0;
+		
+		for(int i = 0; i < classMap.size(); i++)
+		{
+			students = students + classMap.get(i).size();
+		}
+		
+		return students;
 	}
 	
 	public ArrayList<String> findUniqueIDs(String file, HashMap <String, ArrayList<String>> students)

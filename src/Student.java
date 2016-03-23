@@ -3,11 +3,8 @@ import java.util.HashMap;
 
 
 public class Student{
-	//Student id + data
-	//hash map : Studentid, ArrayList<Strin[]> (adds String[arrays] to arraylist)
+
 	private HashMap <String, ArrayList<String>> studentMap;
-	
-//	private ArrayList<HashMap> studentList = new ArrayList<HashMap>();
 	
 	
 	public Student(String ID, ArrayList<String> studentData){
