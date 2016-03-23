@@ -59,12 +59,18 @@ public class Files
 		
 		for(int i = 0; i < filesToRead.size(); i++)
 		{
+			int[] newGrades = classMap.get(filesToRead.get(i)).getGradesForThisFile();
 			
+			for(int j = 0; j < 5; j++)
+			{
+				grades[j] = (grades[j] + newGrades[j]);
+			}
 			
-			String oneGrade = classMap.get(filesToRead).get();
 		}
 		
+		return grades;
 	}
+	
 	public ArrayList<String> findUniqueIDs(String file, HashMap <String, ArrayList<String>> students)
 	{
 		String[] temp = (String[]) students.keySet().toArray();

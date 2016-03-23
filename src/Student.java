@@ -7,7 +7,7 @@ public class Student{
 	//hash map : Studentid, ArrayList<Strin[]> (adds String[arrays] to arraylist)
 	private HashMap <String, ArrayList<String>> studentMap;
 	
-	private ArrayList<HashMap> studentList = new ArrayList<HashMap>();
+//	private ArrayList<HashMap> studentList = new ArrayList<HashMap>();
 	
 	
 	public Student(String ID, ArrayList<String> studentData){
@@ -35,6 +35,44 @@ public class Student{
 		return pos;
 	}
 	
+	public int[] getGradesForThisFile()
+	{
+		int[] gradesForThisFile = new int[5];
+		
+		String[] studentIDs = (String[]) studentMap.keySet().toArray();
+		for(int i = 0; i < studentMap.size(); i++)
+		{
+			String ID = studentIDs[i];
+			
+			String grade = studentMap.get(ID).get(studentMap.get(i).size() - 1);
+			
+			switch(grade)
+			{
+			
+			case "A":
+				gradesForThisFile[0] = gradesForThisFile[0] + 1;
+				break;
+				
+			case "B":
+				gradesForThisFile[0] = gradesForThisFile[1] + 1;
+				break;
+				
+			case "C":
+				gradesForThisFile[0] = gradesForThisFile[2] + 1;
+				break;
+				
+			case "D":
+				gradesForThisFile[0] = gradesForThisFile[3] + 1;
+				break;
+				
+			case "F":
+				gradesForThisFile[0] = gradesForThisFile[4] + 1;
+				break;
+			}
+		}
+		
+		return gradesForThisFile;
+	}
 	
 	public HashMap<String, ArrayList<String>> getStudentData(){
 		return studentMap;
