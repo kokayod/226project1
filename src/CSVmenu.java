@@ -1,3 +1,8 @@
+package csv;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -7,6 +12,15 @@ public class CSVmenu
 	private Scanner kb = new Scanner(System.in);
 	private String input = "", fileName = "", courseSem = "", courseYear = "", courseNum = "", studentID = "", exportFile = "";
 	ReadCSVmain read = new ReadCSVmain();
+        Export myEx = new Export();
+        fileReader myPars = new fileReader();
+        
+//        ArrayList<String> stu = new ArrayList<>();
+//        ArrayList<Student> dents = new ArrayList<>();
+//        ArrayList<String> key = new ArrayList<>();
+//        String gogo = "";
+//        Student myStu = new Student(gogo, key);
+//        Files myFile = new Files(stu, dents);
 
 	public void start(){
 		while(!input.equalsIgnoreCase("e")){
@@ -31,6 +45,7 @@ public class CSVmenu
 				numberOfGradesData();
 				isEntry = true;
 			}
+                       
 			else if(!input.equalsIgnoreCase("e") && isEntry == false){
 				System.out.println("Invalid entry!");
 			}
@@ -40,14 +55,18 @@ public class CSVmenu
 
 	//add exception handling for no data (valid file) added
 	private void addData(){
-//		getCourseInfo();
+		getCourseInfo();
+                
+                
 		fileName = courseNum + "-" + courseSem + "-" + courseYear + ".csv";
 		System.out.println(fileName);
-		//check here if file exist
 		
+                // Gives it the proper destination
+                String myFile = System.getProperty("user.home") + "/Documents/" + fileName;
+		File filer = new File(myFile);
+                
 		//read and extract data from file
-//		read.extract(fileName);
-		read.extract("380-fall-2002.csv");
+                myPars.readFile(filer);
 		
 		
 		//Print number of students in existing repository and those whose data was read
@@ -56,15 +75,18 @@ public class CSVmenu
 	}
 
 	private void saveData(){
+                // Still need to add functionality to this
 		System.out.println("Please enter student ID:");
 		studentID = kb.nextLine();
-
-		System.out.println("Please enter the desired name for the exported student file:");
-		exportFile = kb.nextLine();
-
+                
+                // Asks for file from user then exports the file
+                // to Documents
+                fileReader myList = new fileReader();
+                
+                myEx.askFile();
+                
 		//find student data
 
-		//export to csv file
 
 	}
 
@@ -74,16 +96,19 @@ public class CSVmenu
 			//return array of grades with [0] = numofAs, [1] = numofBs, [2] = numofCs, [3] = numofDs, [4] = numofFs
 			int[] grades = new int[5];
 
-			//
+	//		myFile.findAllGrades();
 		}
 	}
 
 	private void getCourseInfo(){
+            
 		System.out.println("Please enter course number: ");
 		courseNum = kb.nextLine();
 
-		System.out.println("Please enter semester term and year:");
+		System.out.println("Please enter semester term (Fall/Spring):");
 		courseSem = kb.next();
+                
+                System.out.println("Please enter semester year");
 		courseYear = kb.next();
 	}
 
