@@ -3,20 +3,33 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-public class fileReader
+public class FileParser
 {
 
 	private Scanner input = null;
+	private File fileToRead;
 	public ArrayList<String> data;
 	private int numOfColumns = 0, numOfRows = 0;
+	private boolean exception;
 
-	public ArrayList<String> readFile(File fileToRead){
-
+	public FileParser(String file){
+		data = new ArrayList<String>();
+		fileToRead = new File(file);
+		exception = false;
 		try{
 			input = new Scanner(fileToRead);
-			data = new ArrayList<String>();
+		}
+		catch(FileNotFoundException e){
+			exception = true;
 
+			System.out.println("---------------");
+			System.out.println("ERROR: File '" + file + "' not found");
+			System.out.println("---------------");
+		}
+	}
+
+	public ArrayList<String> readFile(){
+		if(input != null){
 			while(input.hasNextLine()){
 				String line = input.nextLine();
 				String append = "";
@@ -91,19 +104,20 @@ public class fileReader
 					}
 				}
 			}
-		}catch(FileNotFoundException e){
-			System.out.println("Error: File was not found");
+			input.close();
 		}
 		return data;
 	}
 
-	public int getnumOfColumns(){
+	public boolean getException(){
+		return exception;
+	}
+
+	public int getNumOfColumns(){
 		return numOfColumns;
 	}
 
-	public int getnumOfRows(){
+	public int getNumOfRows(){
 		return numOfRows;
 	}
-
-
 }
